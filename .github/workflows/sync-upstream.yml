@@ -8,13 +8,25 @@ on:
 jobs:
   sync:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
-      - name: Sync with upstream
-        uses: aormsby/Fork-Sync-With-Upstream-action@v1
+      - name: Checkout your fork
+        uses: actions/checkout@v4
         with:
-          upstream_repository: thadius83/bambu-to-snapmaker-u1
-          upstream_branch: main
-          target_branch: main
-          github_token: ${{ secrets.GHCR_TOKEN }}
-          merge_method: merge
+          fetch-depth: 0
+
+      - name: Add upstream remote
+        run: |
+          git remote add upstream https://github.com/thadius83/bambu-to-snapmaker-u1.git
+          git fetch upstream
+
+      - name: Merge upstream changes
+        run: |
+          git checkout main
+          git merge upstream/main --no-edit || true
+
+      - name: Push changes back to your fork
+        run: |
+          git push origin main
