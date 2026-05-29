@@ -1,0 +1,20 @@
+name: Sync Fork Weekly
+
+on:
+  schedule:
+    - cron: '0 3 * * 0'   # every Sunday at 3 AM
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Sync with upstream
+        uses: aormsby/Fork-Sync-With-Upstream-action@v3
+        with:
+          upstream_repository: thadius83/bambu-to-snapmaker-u1
+          upstream_branch: main
+          target_branch: main
+          github_token: ${{ secrets.GHCR_TOKEN }}
+          merge_method: merge
