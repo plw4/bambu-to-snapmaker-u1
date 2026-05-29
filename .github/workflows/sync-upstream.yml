@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Sync with upstream
-        uses: aormsby/Fork-Sync-With-Upstream-action@v3
+        uses: aormsby/Fork-Sync-With-Upstream-action@v2
         with:
           upstream_repository: thadius83/bambu-to-snapmaker-u1
           upstream_branch: main
